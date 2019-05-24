@@ -2,6 +2,7 @@ package com.kwabenaberko.currencyconverter.view;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -25,18 +26,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     MainPresenter mPresenter;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
-
     @BindView(R.id.loading_view) RelativeLayout loadingViewLayout;
-
     @BindView(R.id.from_currency) Spinner fromCurrencySpinner;
-
     @BindView(R.id.to_currency) Spinner toCurrencySpinner;
-
-    @BindView(R.id.from_amount) EditText amountEditText;
-
+    @BindView(R.id.from_amount) EditText fromAmountEditText;
     @BindView(R.id.to_amount) EditText toAmountEditText;
+    @BindView(R.id.convert_btn) Button convertBtn;
 
-    private CurrencyAdapter mCurrencyAdapter;
+    private CurrencyAdapter fromCurrencyAdapter, toCurrencyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,27 +47,44 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         setSupportActionBar(mToolbar);
 
-        mCurrencyAdapter = new CurrencyAdapter();
-        fromCurrencySpinner.setAdapter(mCurrencyAdapter);
-        toCurrencySpinner.setAdapter(mCurrencyAdapter);
+        fromCurrencyAdapter = new CurrencyAdapter();
+        fromCurrencySpinner.setAdapter(fromCurrencyAdapter);
+
+        toCurrencyAdapter = new CurrencyAdapter();
+        toCurrencySpinner.setAdapter(toCurrencyAdapter);
 
         mPresenter.attachView(this);
         mPresenter.loadCurrencies();
+
+        convertBtn.setOnClickListener(v -> {
+            Currency fromCurrency = (Currency) fromCurrencySpinner.getSelectedItem();
+            Currency toCurrency = (Currency) toCurrencySpinner.getSelectedItem();
+            mPresenter.convertCurrency(
+                    fromCurrency,
+                    toCurrency,
+                    Double.parseDouble(fromAmountEditText.getText().toString()));
+        });
     }
 
     @Override
     public void onCurrenciesLoaded(List<Currency> currencies) {
         loadingViewLayout.setVisibility(View.GONE);
-        mCurrencyAdapter.setCurrencies(currencies);
+        fromCurrencyAdapter.setCurrencies(currencies);
+        toCurrencyAdapter.setCurrencies(currencies);
     }
 
     @Override
-    public void onLoading(boolean isLoading) {
-        if(isLoading){
-            loadingViewLayout.setVisibility(View.VISIBLE);
-            return;
-        }
+    public void onCurrencyConverted(Double amount) {
+        toAmountEditText.setText(String.valueOf(amount));
+    }
 
+    @Override
+    public void showProgress() {
+        loadingViewLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
         loadingViewLayout.setVisibility(View.GONE);
     }
 

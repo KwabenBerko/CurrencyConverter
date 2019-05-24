@@ -10,10 +10,12 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter {
         void loadCurrencies();
+        void convertCurrency(Currency from, Currency to, Double amount);
     }
 
     interface View extends BaseView {
         void onCurrenciesLoaded(List<Currency> currencies);
+        void onCurrencyConverted(Double amount);
     }
 
 }

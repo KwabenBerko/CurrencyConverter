@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
@@ -15,10 +16,13 @@ import java.util.List;
 
 public class CurrencyAdapter extends BaseAdapter implements SpinnerAdapter {
 
+
     private List<Currency> mCurrencies = new ArrayList<>();
+
 
     static class CurrencyViewHolder{
         TextView currencyName;
+        LinearLayout itemLayout;
     }
 
 
@@ -56,6 +60,7 @@ public class CurrencyAdapter extends BaseAdapter implements SpinnerAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.currency_spinner_item, parent, false);
 
             viewHolder.currencyName = convertView.findViewById(R.id.currency_name);
+            viewHolder.itemLayout = convertView.findViewById(R.id.item_layout);
 
             convertView.setTag(viewHolder);
         }
@@ -66,6 +71,7 @@ public class CurrencyAdapter extends BaseAdapter implements SpinnerAdapter {
 
         Currency currency = mCurrencies.get(position);
         viewHolder.currencyName.setText(String.format("%s(%s)", currency.getCurrencyName(), currency.getId()));
+
 
         return convertView;
     }
