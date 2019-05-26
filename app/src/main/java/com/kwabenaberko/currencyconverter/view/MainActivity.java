@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onCurrenciesLoaded(List<Currency> currencies) {
-        loadingViewLayout.setVisibility(View.GONE);
         fromCurrencyAdapter.setCurrencies(currencies);
         toCurrencyAdapter.setCurrencies(currencies);
     }
