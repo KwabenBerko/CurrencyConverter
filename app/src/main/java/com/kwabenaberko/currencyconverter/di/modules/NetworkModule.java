@@ -1,9 +1,13 @@
 package com.kwabenaberko.currencyconverter.di.modules;
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kwabenaberko.currencyconverter.BuildConfig;
-import com.kwabenaberko.currencyconverter.service.CurrencyConverterApi;
+import com.kwabenaberko.currencyconverter.data.remote.RemoteDataSource;
+import com.kwabenaberko.currencyconverter.util.network.NetworkHelper;
+import com.kwabenaberko.currencyconverter.util.network.NetworkHelperImpl;
 
 import javax.inject.Singleton;
 
@@ -12,9 +16,10 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module
+@Module(includes = {ApplicationModule.class})
 public class NetworkModule {
 
     private String baseUrl;
@@ -22,6 +27,7 @@ public class NetworkModule {
     public NetworkModule(String baseUrl){
         this.baseUrl = baseUrl;
     }
+
 
     @Singleton
     @Provides
@@ -52,12 +58,19 @@ public class NetworkModule {
                 .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
     @Singleton
     @Provides
-    CurrencyConverterApi provideCurrencyConverterApi(Retrofit retrofit){
-        return retrofit.create(CurrencyConverterApi.class);
+    RemoteDataSource provideCurrencyConverterApi(Retrofit retrofit){
+        return retrofit.create(RemoteDataSource.class);
+    }
+
+    @Singleton
+    @Provides
+    NetworkHelper provideNetworkHelper(Application application){
+        return new NetworkHelperImpl(application.getApplicationContext());
     }
 }

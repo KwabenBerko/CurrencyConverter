@@ -1,6 +1,8 @@
 package com.kwabenaberko.currencyconverter.di.modules;
 
-import com.kwabenaberko.currencyconverter.service.CurrencyConverterApi;
+import com.kwabenaberko.currencyconverter.RxSchedulers;
+import com.kwabenaberko.currencyconverter.data.PrefManager;
+import com.kwabenaberko.currencyconverter.data.Repository;
 import com.kwabenaberko.currencyconverter.view.MainPresenter;
 
 import javax.inject.Singleton;
@@ -8,11 +10,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {NetworkModule.class})
+@Module(includes = {ApplicationModule.class, DataModule.class})
 public class PresenterModule {
+
     @Singleton
     @Provides
-    MainPresenter provideMainPresenter(CurrencyConverterApi converterApi){
-        return new MainPresenter(converterApi);
+    MainPresenter provideMainPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers){
+        return new MainPresenter(repository, prefManager, rxSchedulers);
     }
 }

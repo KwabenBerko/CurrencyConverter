@@ -1,86 +1,87 @@
 package com.kwabenaberko.currencyconverter.view;
 
+import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.base.BaseView;
-import com.kwabenaberko.currencyconverter.model.Conversion;
-import com.kwabenaberko.currencyconverter.model.ConversionResponse;
-import com.kwabenaberko.currencyconverter.model.CurrenciesResponse;
+import com.kwabenaberko.currencyconverter.data.PrefManager;
+import com.kwabenaberko.currencyconverter.data.Repository;
 import com.kwabenaberko.currencyconverter.model.Currency;
-import com.kwabenaberko.currencyconverter.service.CurrencyConverterApi;
-import com.kwabenaberko.currencyconverter.util.Constants;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainPresenter implements MainContract.Presenter {
 
-    private CurrencyConverterApi mConverterApi;
+    private Repository mRepository;
+    private PrefManager mPrefManager;
+    private RxSchedulers mRxSchedulers;
     private MainContract.View mView;
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Inject
-    public MainPresenter(CurrencyConverterApi converterApi) {
-        this.mConverterApi = converterApi;
+    public MainPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers) {
+        this.mRepository = repository;
+        this.mPrefManager = prefManager;
+        this.mRxSchedulers = rxSchedulers;
     }
 
     @Override
     public void loadCurrencies() {
-        //Normally, this operation should be delegated to another layer, say a Repository Layer.
+
         mView.showProgress();
-        mConverterApi.getCurrencies(Constants.API_KEY)
-                .enqueue(new Callback<CurrenciesResponse>() {
-                    @Override
-                    public void onResponse(Call<CurrenciesResponse> call, Response<CurrenciesResponse> response) {
-                        mView.hideProgress();
-                        if (response.isSuccessful() && response.body() != null) {
-                            List<Currency> currencies = new ArrayList<>(response.body().getResults().values());
+        mDisposable.add(mRepository.fetchCurrencies()
+                .subscribeOn(mRxSchedulers.io())
+                .observeOn(mRxSchedulers.mainThread())
+                .subscribe(currencies -> {
+                    mView.hideProgress();
+                    //Sorting In Ascending Order By Currency Name
+                    Collections.sort(currencies, (currencyOne, currencyTwo) ->
+                            currencyOne.getCurrencyName().compareToIgnoreCase(currencyTwo.getCurrencyName())
+                    );
 
-                            //Sorting In Ascending Order By Currency Name
-                            Collections.sort(currencies, (currencyOne, currencyTwo) ->
-                                    currencyOne.getCurrencyName().compareToIgnoreCase(currencyTwo.getCurrencyName())
-                            );
+                    List<Currency> toCurrencies = new ArrayList<>(currencies);
+                    List<Currency> fromCurrencies = new ArrayList<>(currencies);
 
-                            mView.onCurrenciesLoaded(currencies);
-                        }
+                    Currency fromCurrency = mPrefManager.getFromCurrency();
+                    Currency toCurrency = mPrefManager.getToCurrency();
+
+                    if (fromCurrency != null && fromCurrencies.indexOf(fromCurrency) > -1) {
+                        fromCurrencies.remove(fromCurrency);
+                        fromCurrencies.add(0, fromCurrency);
                     }
 
-                    @Override
-                    public void onFailure(Call<CurrenciesResponse> call, Throwable t) {
-                        mView.hideProgress();
+                    if (toCurrency != null && toCurrencies.indexOf(toCurrency) > -1) {
+                        toCurrencies.remove(toCurrency);
+                        toCurrencies.add(0, toCurrency);
                     }
-                });
+
+
+                    mView.onFromCurrenciesLoaded(fromCurrencies);
+                    mView.onToCurrenciesLoaded(toCurrencies);
+
+                }, (throwable) -> {
+                    throwable.printStackTrace();
+                    mView.hideProgress();
+                }));
     }
 
     @Override
-    public void convertCurrency(Currency from, Currency to, Double amount){
-        String query = String.format("%s_%s", from.getId().toUpperCase(), to.getId().toUpperCase());
+    public void convertCurrency(Currency from, Currency to, Double amount) {
 
         mView.showProgress();
-        mConverterApi.convert(query,Constants.API_KEY)
-                .enqueue(new Callback<ConversionResponse>() {
-                    @Override
-                    public void onResponse(Call<ConversionResponse> call, Response<ConversionResponse> response) {
-                        mView.hideProgress();
-                        if(response.isSuccessful() && response.body() != null){
-                            Conversion conversion = response.body().getResults().get(query);
-                            mView.onCurrencyConverted(
-                                    BigDecimal.valueOf(amount).multiply(conversion.getValue()).setScale(2, RoundingMode.HALF_UP).doubleValue()
-                            );
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ConversionResponse> call, Throwable t) {
-                        mView.hideProgress();
-                    }
-                });
+        mDisposable.add(mRepository.convert(from, to, amount)
+                .observeOn(mRxSchedulers.mainThread())
+                .subscribeOn(mRxSchedulers.io())
+                .subscribe(convertedAmount -> {
+                    mPrefManager.setFromCurrency(from);
+                    mPrefManager.setToCurrency(to);
+                    mView.hideProgress();
+                    mView.onCurrencyConverted(convertedAmount);
+                }, throwable -> mView.hideProgress()));
     }
 
     @Override
@@ -90,8 +91,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void detachView() {
-        if (mView != null) {
-            mView = null;
-        }
+        mDisposable.dispose();
+        mView = null;
     }
 }

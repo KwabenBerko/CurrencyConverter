@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         toCurrencySpinner.setAdapter(toCurrencyAdapter);
 
         mPresenter.attachView(this);
-        mPresenter.loadCurrencies();
 
         convertBtn.setOnClickListener(v -> {
             Currency fromCurrency = (Currency) fromCurrencySpinner.getSelectedItem();
@@ -64,11 +63,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     toCurrency,
                     Double.parseDouble(fromAmountEditText.getText().toString()));
         });
+
+
+        mPresenter.loadCurrencies();
+    }
+
+
+    @Override
+    public void onFromCurrenciesLoaded(List<Currency> currencies) {
+        fromCurrencyAdapter.setCurrencies(currencies);
     }
 
     @Override
-    public void onCurrenciesLoaded(List<Currency> currencies) {
-        fromCurrencyAdapter.setCurrencies(currencies);
+    public void onToCurrenciesLoaded(List<Currency> currencies) {
         toCurrencyAdapter.setCurrencies(currencies);
     }
 
