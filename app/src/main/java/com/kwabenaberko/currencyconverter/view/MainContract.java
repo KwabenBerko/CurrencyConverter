@@ -14,8 +14,8 @@ public interface MainContract {
     }
 
     interface View extends BaseView {
-        void onFromCurrenciesLoaded(List<Currency> currencies);
-        void onToCurrenciesLoaded(List<Currency> currencies);
+        void onFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
+        void onToCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
         void onCurrencyConverted(Double amount);
     }
 

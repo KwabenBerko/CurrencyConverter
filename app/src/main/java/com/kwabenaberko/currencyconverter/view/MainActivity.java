@@ -70,13 +70,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
 
     @Override
-    public void onFromCurrenciesLoaded(List<Currency> currencies) {
+    public void onFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
         fromCurrencyAdapter.setCurrencies(currencies);
+        int index = currencies != null? currencies.indexOf(selectedCurrency) : -1;
+        if(index > -1){
+            fromCurrencySpinner.setSelection(index);
+        }
     }
 
     @Override
-    public void onToCurrenciesLoaded(List<Currency> currencies) {
+    public void onToCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
         toCurrencyAdapter.setCurrencies(currencies);
+        int index = currencies != null? currencies.indexOf(selectedCurrency) : -1;
+        if(index > -1){
+            toCurrencySpinner.setSelection(index);
+        }
     }
 
     @Override

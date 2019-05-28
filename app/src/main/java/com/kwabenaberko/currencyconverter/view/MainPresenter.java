@@ -49,19 +49,9 @@ public class MainPresenter implements MainContract.Presenter {
                     Currency fromCurrency = mPrefManager.getFromCurrency();
                     Currency toCurrency = mPrefManager.getToCurrency();
 
-                    if (fromCurrency != null && fromCurrencies.indexOf(fromCurrency) > -1) {
-                        fromCurrencies.remove(fromCurrency);
-                        fromCurrencies.add(0, fromCurrency);
-                    }
 
-                    if (toCurrency != null && toCurrencies.indexOf(toCurrency) > -1) {
-                        toCurrencies.remove(toCurrency);
-                        toCurrencies.add(0, toCurrency);
-                    }
-
-
-                    mView.onFromCurrenciesLoaded(fromCurrencies);
-                    mView.onToCurrenciesLoaded(toCurrencies);
+                    mView.onFromCurrenciesLoaded(fromCurrencies, fromCurrency);
+                    mView.onToCurrenciesLoaded(toCurrencies, toCurrency);
 
                 }, (throwable) -> {
                     throwable.printStackTrace();

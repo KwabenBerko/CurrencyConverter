@@ -18,6 +18,7 @@ import java.util.List;
 import io.reactivex.Observable;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -60,8 +61,8 @@ public class MainPresenterTest {
         verify(mockView, times(1)).showProgress();
         verify(mockRepository, times(1)).fetchCurrencies();
         verify(mockView, times(1)).hideProgress();
-        verify(mockView, times(1)).onFromCurrenciesLoaded(anyList());
-        verify(mockView, times(1)).onToCurrenciesLoaded(anyList());
+        verify(mockView, times(1)).onFromCurrenciesLoaded(anyList(), any());
+        verify(mockView, times(1)).onToCurrenciesLoaded(anyList(), any());
     }
 
     @Test
@@ -73,22 +74,34 @@ public class MainPresenterTest {
 
         mPresenter.loadCurrencies();
 
-
-        verify(mockView, times(1)).onFromCurrenciesLoaded(captor.capture());
+        verify(mockView, times(1)).onFromCurrenciesLoaded(captor.capture(), any());
 
         assertEquals(captor.getValue().get(0).getId(), "GHS");
 
-        verify(mockView, times(1)).onToCurrenciesLoaded(captor.capture());
+        verify(mockView, times(1)).onToCurrenciesLoaded(captor.capture(), any());
 
         assertEquals(captor.getValue().get(0).getId(), "GHS");
     }
 
     @Test
     public void loadCurrencies_IfSuccessful_ShouldSetDefaultCurrenciesFromPreferences(){
+
+        ArgumentCaptor<Currency> captor = ArgumentCaptor.forClass(Currency.class);
+
         when(mockRepository.fetchCurrencies()).thenReturn(Observable.just(mCurrencies));
+
+        when(mockPrefManager.getFromCurrency()).thenReturn(mCurrencies.get(0));
+        when(mockPrefManager.getToCurrency()).thenReturn(mCurrencies.get(1));
 
         mPresenter.loadCurrencies();
 
+        verify(mockView, times(1)).onFromCurrenciesLoaded(anyList(), captor.capture());
+
+        assertEquals(captor.getValue().getId(), "USD");
+
+        verify(mockView, times(1)).onToCurrenciesLoaded(anyList(), captor.capture());
+
+        assertEquals(captor.getValue().getId(), "GHS");
 
     }
 }
