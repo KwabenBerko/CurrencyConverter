@@ -3,7 +3,7 @@ package com.kwabenaberko.currencyconverter.di.modules;
 import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.data.PrefManager;
 import com.kwabenaberko.currencyconverter.data.Repository;
-import com.kwabenaberko.currencyconverter.ui.MainPresenter;
+import com.kwabenaberko.currencyconverter.ui.currencies.CurrencyListPresenter;
 
 import javax.inject.Singleton;
 
@@ -15,7 +15,7 @@ public class PresenterModule {
 
     @Singleton
     @Provides
-    MainPresenter provideMainPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers){
-        return new MainPresenter(repository, prefManager, rxSchedulers);
+    CurrencyListPresenter provideMainPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers){
+        return new CurrencyListPresenter(repository, prefManager, rxSchedulers);
     }
 }

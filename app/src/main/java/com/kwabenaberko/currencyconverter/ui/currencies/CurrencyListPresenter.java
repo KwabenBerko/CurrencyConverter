@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.ui;
+package com.kwabenaberko.currencyconverter.ui.currencies;
 
 import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.base.BaseView;
@@ -14,16 +14,16 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainPresenter implements MainContract.Presenter {
+public class CurrencyListPresenter implements CurrencyListContract.Presenter {
 
     private Repository mRepository;
     private PrefManager mPrefManager;
     private RxSchedulers mRxSchedulers;
-    private MainContract.View mView;
+    private CurrencyListContract.View mView;
     private CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Inject
-    public MainPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers) {
+    public CurrencyListPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers) {
         this.mRepository = repository;
         this.mPrefManager = prefManager;
         this.mRxSchedulers = rxSchedulers;
@@ -76,7 +76,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void attachView(BaseView baseView) {
-        mView = (MainContract.View) baseView;
+        mView = (CurrencyListContract.View) baseView;
     }
 
     @Override

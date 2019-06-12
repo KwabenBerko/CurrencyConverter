@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.ui;
+package com.kwabenaberko.currencyconverter.ui.currencies;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,10 +20,10 @@ import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class CurrencyListActivity extends AppCompatActivity implements CurrencyListContract.View {
 
     @Inject
-    MainPresenter mPresenter;
+    CurrencyListPresenter mPresenter;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.loading_view) RelativeLayout loadingViewLayout;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @BindView(R.id.to_amount) EditText toAmountEditText;
     @BindView(R.id.convert_btn) Button convertBtn;
 
-    private CurrencyAdapter fromCurrencyAdapter, toCurrencyAdapter;
+    private CurrencyListAdapter fromCurrencyListAdapter, toCurrencyListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         setSupportActionBar(mToolbar);
 
-        fromCurrencyAdapter = new CurrencyAdapter();
-        fromCurrencySpinner.setAdapter(fromCurrencyAdapter);
+        fromCurrencyListAdapter = new CurrencyListAdapter();
+        fromCurrencySpinner.setAdapter(fromCurrencyListAdapter);
 
-        toCurrencyAdapter = new CurrencyAdapter();
-        toCurrencySpinner.setAdapter(toCurrencyAdapter);
+        toCurrencyListAdapter = new CurrencyListAdapter();
+        toCurrencySpinner.setAdapter(toCurrencyListAdapter);
 
         mPresenter.attachView(this);
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
-        fromCurrencyAdapter.setCurrencies(currencies);
+        fromCurrencyListAdapter.setCurrencies(currencies);
         int index = currencies != null? currencies.indexOf(selectedCurrency) : -1;
         if(index > -1){
             fromCurrencySpinner.setSelection(index);
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onToCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
-        toCurrencyAdapter.setCurrencies(currencies);
+        toCurrencyListAdapter.setCurrencies(currencies);
         int index = currencies != null? currencies.indexOf(selectedCurrency) : -1;
         if(index > -1){
             toCurrencySpinner.setSelection(index);

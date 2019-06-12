@@ -3,8 +3,8 @@ package com.kwabenaberko.currencyconverter;
 import com.kwabenaberko.currencyconverter.data.PrefManager;
 import com.kwabenaberko.currencyconverter.data.Repository;
 import com.kwabenaberko.currencyconverter.model.Currency;
-import com.kwabenaberko.currencyconverter.ui.MainContract;
-import com.kwabenaberko.currencyconverter.ui.MainPresenter;
+import com.kwabenaberko.currencyconverter.ui.currencies.CurrencyListContract;
+import com.kwabenaberko.currencyconverter.ui.currencies.CurrencyListPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,13 +24,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MainPresenterTest {
+public class CurrencyListPresenterTest {
 
-    private MainPresenter mPresenter;
+    private CurrencyListPresenter mPresenter;
 
 
     @Mock
-    MainContract.View mockView;
+    CurrencyListContract.View mockView;
 
     @Mock
     Repository mockRepository;
@@ -47,7 +47,7 @@ public class MainPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mPresenter = new MainPresenter(mockRepository, mockPrefManager, new TestRxSchedulers());
+        mPresenter = new CurrencyListPresenter(mockRepository, mockPrefManager, new TestRxSchedulers());
         mPresenter.attachView(mockView);
     }
 

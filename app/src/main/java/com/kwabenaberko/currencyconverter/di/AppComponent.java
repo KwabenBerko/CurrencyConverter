@@ -4,7 +4,7 @@ import com.kwabenaberko.currencyconverter.di.modules.ApplicationModule;
 import com.kwabenaberko.currencyconverter.di.modules.DataModule;
 import com.kwabenaberko.currencyconverter.di.modules.NetworkModule;
 import com.kwabenaberko.currencyconverter.di.modules.PresenterModule;
-import com.kwabenaberko.currencyconverter.ui.MainActivity;
+import com.kwabenaberko.currencyconverter.ui.currencies.CurrencyListActivity;
 
 import javax.inject.Singleton;
 
@@ -26,5 +26,5 @@ public interface AppComponent {
         AppComponent build();
     }
 
-    void inject(MainActivity mainActivity);
+    void inject(CurrencyListActivity currencyListActivity);
 }

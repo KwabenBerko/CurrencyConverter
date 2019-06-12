@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.ui;
+package com.kwabenaberko.currencyconverter.ui.currencies;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.kwabenaberko.currencyconverter.model.Currency;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrencyAdapter extends BaseAdapter implements SpinnerAdapter {
+public class CurrencyListAdapter extends BaseAdapter implements SpinnerAdapter {
 
 
     private List<Currency> mCurrencies = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.ui;
+package com.kwabenaberko.currencyconverter.ui.currencies;
 
 import com.kwabenaberko.currencyconverter.base.BasePresenter;
 import com.kwabenaberko.currencyconverter.base.BaseView;
@@ -6,7 +6,7 @@ import com.kwabenaberko.currencyconverter.model.Currency;
 
 import java.util.List;
 
-public interface MainContract {
+public interface CurrencyListContract {
 
     interface Presenter extends BasePresenter {
         void loadCurrencies();
