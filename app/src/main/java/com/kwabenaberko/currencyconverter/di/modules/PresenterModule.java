@@ -3,7 +3,7 @@ package com.kwabenaberko.currencyconverter.di.modules;
 import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.data.PrefManager;
 import com.kwabenaberko.currencyconverter.data.Repository;
-import com.kwabenaberko.currencyconverter.view.MainPresenter;
+import com.kwabenaberko.currencyconverter.ui.MainPresenter;
 
 import javax.inject.Singleton;
 

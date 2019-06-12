@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.view;
+package com.kwabenaberko.currencyconverter.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -4,7 +4,7 @@ import com.kwabenaberko.currencyconverter.di.modules.ApplicationModule;
 import com.kwabenaberko.currencyconverter.di.modules.DataModule;
 import com.kwabenaberko.currencyconverter.di.modules.NetworkModule;
 import com.kwabenaberko.currencyconverter.di.modules.PresenterModule;
-import com.kwabenaberko.currencyconverter.view.MainActivity;
+import com.kwabenaberko.currencyconverter.ui.MainActivity;
 
 import javax.inject.Singleton;
 

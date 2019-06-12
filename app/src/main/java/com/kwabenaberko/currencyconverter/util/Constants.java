@@ -1,6 +1,6 @@
 package com.kwabenaberko.currencyconverter.util;
 
-import com.kwabenaberko.currencyconverter.view.MainActivity;
+import com.kwabenaberko.currencyconverter.ui.MainActivity;
 
 public class Constants {
     public static final String TAG = MainActivity.class.getSimpleName();

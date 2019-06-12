@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.view;
+package com.kwabenaberko.currencyconverter.ui;
 
 import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.base.BaseView;

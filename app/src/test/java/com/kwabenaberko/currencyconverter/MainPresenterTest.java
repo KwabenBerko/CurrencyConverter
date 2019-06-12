@@ -3,8 +3,8 @@ package com.kwabenaberko.currencyconverter;
 import com.kwabenaberko.currencyconverter.data.PrefManager;
 import com.kwabenaberko.currencyconverter.data.Repository;
 import com.kwabenaberko.currencyconverter.model.Currency;
-import com.kwabenaberko.currencyconverter.view.MainContract;
-import com.kwabenaberko.currencyconverter.view.MainPresenter;
+import com.kwabenaberko.currencyconverter.ui.MainContract;
+import com.kwabenaberko.currencyconverter.ui.MainPresenter;
 
 import org.junit.Before;
 import org.junit.Test;
