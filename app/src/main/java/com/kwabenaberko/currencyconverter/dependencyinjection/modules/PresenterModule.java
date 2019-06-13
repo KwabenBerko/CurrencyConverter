@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.di.modules;
+package com.kwabenaberko.currencyconverter.dependencyinjection.modules;
 
 import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.data.PrefManager;

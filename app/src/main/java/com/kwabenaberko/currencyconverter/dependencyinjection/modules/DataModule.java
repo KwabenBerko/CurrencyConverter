@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.di.modules;
+package com.kwabenaberko.currencyconverter.dependencyinjection.modules;
 
 import android.app.Application;
 

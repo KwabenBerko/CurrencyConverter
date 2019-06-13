@@ -1,9 +1,9 @@
-package com.kwabenaberko.currencyconverter.di;
+package com.kwabenaberko.currencyconverter.dependencyinjection;
 
-import com.kwabenaberko.currencyconverter.di.modules.ApplicationModule;
-import com.kwabenaberko.currencyconverter.di.modules.DataModule;
-import com.kwabenaberko.currencyconverter.di.modules.NetworkModule;
-import com.kwabenaberko.currencyconverter.di.modules.PresenterModule;
+import com.kwabenaberko.currencyconverter.dependencyinjection.modules.ApplicationModule;
+import com.kwabenaberko.currencyconverter.dependencyinjection.modules.DataModule;
+import com.kwabenaberko.currencyconverter.dependencyinjection.modules.NetworkModule;
+import com.kwabenaberko.currencyconverter.dependencyinjection.modules.PresenterModule;
 import com.kwabenaberko.currencyconverter.ui.currencies.CurrencyListActivity;
 
 import javax.inject.Singleton;
