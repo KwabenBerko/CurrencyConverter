@@ -15,7 +15,7 @@ public class PresenterModule {
 
     @Singleton
     @Provides
-    CurrencyListPresenter provideMainPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers){
+    CurrencyListPresenter provideCurrencyListPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers){
         return new CurrencyListPresenter(repository, prefManager, rxSchedulers);
     }
 }
