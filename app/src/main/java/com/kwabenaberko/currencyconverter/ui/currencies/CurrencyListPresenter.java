@@ -4,6 +4,7 @@ import com.kwabenaberko.currencyconverter.RxSchedulers;
 import com.kwabenaberko.currencyconverter.data.PrefManager;
 import com.kwabenaberko.currencyconverter.data.Repository;
 import com.kwabenaberko.currencyconverter.model.Currency;
+import com.kwabenaberko.currencyconverter.ui.base.BasePresenterImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,27 +14,24 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class CurrencyListPresenter implements CurrencyListContract.Presenter {
+public class CurrencyListPresenter extends BasePresenterImpl<CurrencyListContract.View> implements CurrencyListContract.Presenter {
 
     private Repository repository;
     private PrefManager prefManager;
     private RxSchedulers rxSchedulers;
-    private CurrencyListContract.View view;
-    private CompositeDisposable compositeDisposable;
 
     @Inject
     public CurrencyListPresenter(Repository repository, PrefManager prefManager, RxSchedulers rxSchedulers) {
         this.repository = repository;
         this.prefManager = prefManager;
         this.rxSchedulers = rxSchedulers;
-        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void loadCurrencies() {
 
         getView().showProgress();
-        compositeDisposable.add(repository.fetchCurrencies()
+        addDisposable(repository.fetchCurrencies()
                 .subscribeOn(rxSchedulers.io())
                 .observeOn(rxSchedulers.mainThread())
                 .subscribe(currencies -> {
@@ -57,7 +55,7 @@ public class CurrencyListPresenter implements CurrencyListContract.Presenter {
 
                 }, (throwable) -> {
                     throwable.printStackTrace();
-                    view.hideProgress();
+                    getView().hideProgress();
                 }));
     }
 
@@ -65,7 +63,7 @@ public class CurrencyListPresenter implements CurrencyListContract.Presenter {
     public void convertCurrency(Currency from, Currency to, Double amount) {
 
         getView().showProgress();
-        compositeDisposable.add(repository.convert(from, to, amount)
+        addDisposable(repository.convert(from, to, amount)
                 .observeOn(rxSchedulers.mainThread())
                 .subscribeOn(rxSchedulers.io())
                 .subscribe(convertedAmount -> {
@@ -77,24 +75,4 @@ public class CurrencyListPresenter implements CurrencyListContract.Presenter {
     }
 
 
-    @Override
-    public void attachView(CurrencyListContract.View view) {
-        this.view = view;
-    }
-
-    @Override
-    public CurrencyListContract.View getView() {
-        return view;
-    }
-
-    @Override
-    public boolean isViewAttached() {
-        return view != null;
-    }
-
-    @Override
-    public void detachView() {
-        compositeDisposable.dispose();
-        view = null;
-    }
 }
