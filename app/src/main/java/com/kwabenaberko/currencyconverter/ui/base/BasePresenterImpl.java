@@ -3,7 +3,7 @@ package com.kwabenaberko.currencyconverter.ui.base;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
+public abstract class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
 
     private V view;
     private CompositeDisposable compositeDisposable;
