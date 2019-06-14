@@ -1,4 +1,4 @@
-package com.kwabenaberko.currencyconverter.base;
+package com.kwabenaberko.currencyconverter.ui.base;
 
 public interface BaseView {
     void showProgress();
