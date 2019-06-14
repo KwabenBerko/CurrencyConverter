@@ -25,11 +25,6 @@ public class ApplicationModule {
         return mApplication;
     }
 
-    @Singleton
-    @Provides
-    PrefManager providePrefManager(Application application){
-        return new PrefManagerImpl(application);
-    }
 
     @Singleton
     @Provides

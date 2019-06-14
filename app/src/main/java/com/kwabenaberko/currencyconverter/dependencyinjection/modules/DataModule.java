@@ -3,6 +3,8 @@ package com.kwabenaberko.currencyconverter.dependencyinjection.modules;
 import android.app.Application;
 
 import com.kwabenaberko.currencyconverter.R;
+import com.kwabenaberko.currencyconverter.data.PrefManager;
+import com.kwabenaberko.currencyconverter.data.PrefManagerImpl;
 import com.kwabenaberko.currencyconverter.data.Repository;
 import com.kwabenaberko.currencyconverter.data.RepositoryImpl;
 import com.kwabenaberko.currencyconverter.data.local.LocalDataSource;
@@ -36,6 +38,12 @@ public class DataModule {
     @Provides
     Repository provideRepository(LocalDataSource localDataSource, RemoteDataSource remoteDataSource, NetworkHelper networkHelper){
         return new RepositoryImpl(localDataSource, remoteDataSource, networkHelper);
+    }
+
+    @Singleton
+    @Provides
+    PrefManager providePrefManager(Application application){
+        return new PrefManagerImpl(application);
     }
 
 }
