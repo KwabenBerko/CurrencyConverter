@@ -12,5 +12,6 @@ data class Currency (
         @ColumnInfo
         val currencyName: String,
 
+        @ColumnInfo
         val currencySymbol: String? = null
 )
