@@ -1,7 +1,6 @@
 package com.kwabenaberko.currencyconverter;
 
 import com.kwabenaberko.currencyconverter.data.Repository;
-import com.kwabenaberko.currencyconverter.data.RepositoryImpl;
 import com.kwabenaberko.currencyconverter.data.local.LocalDataSource;
 import com.kwabenaberko.currencyconverter.data.remote.RemoteDataSource;
 import com.kwabenaberko.currencyconverter.model.Conversion;
@@ -52,7 +51,7 @@ public class RepositoryTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mRepository = new RepositoryImpl(mockLocalDataSource, mockRemoteDataSource, mNetworkHelper);
+        mRepository = new Repository(mockLocalDataSource, mockRemoteDataSource, mNetworkHelper);
     }
 
     @Test

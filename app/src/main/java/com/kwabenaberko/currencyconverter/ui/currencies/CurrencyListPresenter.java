@@ -12,8 +12,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.CompositeDisposable;
-
 public class CurrencyListPresenter extends BasePresenterImpl<CurrencyListContract.View> implements CurrencyListContract.Presenter {
 
     private Repository repository;

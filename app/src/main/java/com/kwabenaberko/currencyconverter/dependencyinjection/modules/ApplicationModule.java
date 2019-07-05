@@ -3,8 +3,6 @@ package com.kwabenaberko.currencyconverter.dependencyinjection.modules;
 import android.app.Application;
 
 import com.kwabenaberko.currencyconverter.RxSchedulers;
-import com.kwabenaberko.currencyconverter.data.PrefManager;
-import com.kwabenaberko.currencyconverter.data.PrefManagerImpl;
 
 import javax.inject.Singleton;
 

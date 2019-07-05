@@ -7,7 +7,6 @@ import com.google.gson.GsonBuilder;
 import com.kwabenaberko.currencyconverter.BuildConfig;
 import com.kwabenaberko.currencyconverter.data.remote.RemoteDataSource;
 import com.kwabenaberko.currencyconverter.util.network.NetworkHelper;
-import com.kwabenaberko.currencyconverter.util.network.NetworkHelperImpl;
 
 import javax.inject.Singleton;
 
@@ -71,6 +70,6 @@ public class NetworkModule {
     @Singleton
     @Provides
     NetworkHelper provideNetworkHelper(Application application){
-        return new NetworkHelperImpl(application.getApplicationContext());
+        return new NetworkHelper(application.getApplicationContext());
     }
 }
