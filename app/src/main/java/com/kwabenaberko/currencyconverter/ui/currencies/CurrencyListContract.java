@@ -9,9 +9,9 @@ import java.util.List;
 public interface CurrencyListContract {
 
     interface View extends BaseView {
-        void onFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
-        void onToCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
-        void onCurrencyConverted(Double amount);
+        void showFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
+        void showCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
+        void showCurrencyConverted(Double amount);
     }
 
 

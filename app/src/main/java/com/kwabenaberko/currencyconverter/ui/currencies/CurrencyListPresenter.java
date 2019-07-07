@@ -47,8 +47,8 @@ public class CurrencyListPresenter extends BasePresenterImpl<CurrencyListContrac
 
 
                     if(isViewAttached()){
-                        getView().onFromCurrenciesLoaded(fromCurrencies, fromCurrency);
-                        getView().onToCurrenciesLoaded(toCurrencies, toCurrency);
+                        getView().showFromCurrenciesLoaded(fromCurrencies, fromCurrency);
+                        getView().showCurrenciesLoaded(toCurrencies, toCurrency);
                     }
 
                 }, (throwable) -> {
@@ -68,7 +68,7 @@ public class CurrencyListPresenter extends BasePresenterImpl<CurrencyListContrac
                     prefManager.setFromCurrency(from);
                     prefManager.setToCurrency(to);
                     getView().hideProgress();
-                    getView().onCurrencyConverted(convertedAmount);
+                    getView().showCurrencyConverted(convertedAmount);
                 }, throwable -> getView().hideProgress()));
     }
 

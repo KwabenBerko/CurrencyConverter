@@ -70,7 +70,7 @@ public class CurrencyListActivity extends AppCompatActivity implements CurrencyL
 
 
     @Override
-    public void onFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
+    public void showFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
         fromCurrencyListAdapter.setCurrencies(currencies);
         int index = currencies != null? currencies.indexOf(selectedCurrency) : -1;
         if(index > -1){
@@ -79,7 +79,7 @@ public class CurrencyListActivity extends AppCompatActivity implements CurrencyL
     }
 
     @Override
-    public void onToCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
+    public void showCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency) {
         toCurrencyListAdapter.setCurrencies(currencies);
         int index = currencies != null? currencies.indexOf(selectedCurrency) : -1;
         if(index > -1){
@@ -88,7 +88,7 @@ public class CurrencyListActivity extends AppCompatActivity implements CurrencyL
     }
 
     @Override
-    public void onCurrencyConverted(Double amount) {
+    public void showCurrencyConverted(Double amount) {
         toAmountEditText.setText(String.valueOf(amount));
     }
 
