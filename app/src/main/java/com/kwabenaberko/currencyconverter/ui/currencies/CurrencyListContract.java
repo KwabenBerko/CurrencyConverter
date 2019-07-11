@@ -10,7 +10,7 @@ public interface CurrencyListContract {
 
     interface View extends BaseView {
         void showFromCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
-        void showCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
+        void showToCurrenciesLoaded(List<Currency> currencies, Currency selectedCurrency);
         void showCurrencyConverted(Double amount);
     }
 

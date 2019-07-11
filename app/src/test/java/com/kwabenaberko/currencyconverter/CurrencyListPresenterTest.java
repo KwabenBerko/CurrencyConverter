@@ -62,7 +62,7 @@ public class CurrencyListPresenterTest {
         verify(mockRepository, times(1)).fetchCurrencies();
         verify(mockView, times(1)).hideProgress();
         verify(mockView, times(1)).showFromCurrenciesLoaded(anyList(), any());
-        verify(mockView, times(1)).showCurrenciesLoaded(anyList(), any());
+        verify(mockView, times(1)).showToCurrenciesLoaded(anyList(), any());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class CurrencyListPresenterTest {
 
         assertEquals(captor.getValue().get(0).getId(), "GHS");
 
-        verify(mockView, times(1)).showCurrenciesLoaded(captor.capture(), any());
+        verify(mockView, times(1)).showToCurrenciesLoaded(captor.capture(), any());
 
         assertEquals(captor.getValue().get(0).getId(), "GHS");
     }
@@ -99,7 +99,7 @@ public class CurrencyListPresenterTest {
 
         assertEquals(captor.getValue().getId(), "USD");
 
-        verify(mockView, times(1)).showCurrenciesLoaded(anyList(), captor.capture());
+        verify(mockView, times(1)).showToCurrenciesLoaded(anyList(), captor.capture());
 
         assertEquals(captor.getValue().getId(), "GHS");
 
